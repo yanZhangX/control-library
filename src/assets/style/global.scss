@@ -1,0 +1,170 @@
+@import "./var.scss";
+
+/**
+  * @description 公共样式
+  * @author simon@sayto.top
+  * 包含样式重置（css reset）和 全局分离样式（separate style）
+ */
+
+// use in this file only
+$paging-height-int: 55;
+$breadcrumb-height: 50px; // 面包屑高度
+$filer-height: 80px; // 筛选器高度
+$paging-height: $paging-height-int + 0px; // 分页器高度
+
+:export {
+  pagingHeight: $paging-height-int;
+}
+
+/* 分离样式 */
+/* display */
+.dn{display:none;}
+.di{display:inline;}
+.db{display:block;}
+.dib{display:inline-block;}
+/* box-sizing */
+.bsb{box-sizing: border-box;}
+/* 浮动 */
+.fl{float: left;}
+.fr{float: right;}
+/* 宽度百分比 */
+.wp100{width: 100%;}
+/* position */
+.por{position: relative;}
+.poa{position: absolute;}
+/* text-align */
+.tal {text-align: left;}
+.tac {text-align: center;}
+.tar {text-align: right;}
+/* clear float */
+.clf::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* 隐藏全局滚动条 */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* 隐藏滚动条 */
+.no-scroll-bar{
+  &::-webkit-scrollbar{
+    display: none;
+    width: 0;
+  }
+}
+
+
+/* 居中 */
+.center {position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)}
+
+/* margin padding */
+@for $i from 0 through 30 {
+  .m#{$i} {
+    margin: $i * 1px; /* no */
+  }
+  .ml#{$i} {
+    margin-left: $i * 1px; /* no */
+  }
+  .mr#{$i} {
+    margin-right: $i * 1px; /* no */
+  }
+  .mt#{$i} {
+    margin-top: $i * 1px; /* no */
+  }
+  .mb#{$i} {
+    margin-bottom: $i * 1px; /* no */
+  }
+  .p#{$i} {
+    padding: $i * 1px; /* no */
+  }
+  .pl#{$i} {
+    padding-left: $i * 1px; /* no */
+  }
+  .pr#{$i} {
+    padding-right: $i * 1px; /* no */
+  }
+  .pt#{$i} {
+    padding-top: $i * 1px; /* no */
+  }
+  .pb#{$i} {
+    padding-bottom: $i * 1px; /* no */
+  }
+}
+
+// 一个表示加载中的简单小动画，3个点依次显示
+.dota {
+  display: inline-block;
+  height: 1em; line-height: 1;
+  text-align: left;
+  vertical-align: -.25em;
+  overflow: hidden;
+}
+.dota::before {
+  display: block;
+  content: '...\A..\A.';
+  white-space: pre-wrap;   /* 也可以是white-space: pre */
+  animation: dot 3s infinite step-start both;
+}
+@keyframes dot {
+  33% { transform: translateY(-2em); }
+  66% { transform: translateY(-1em); }
+}
+
+.breadcrumb-container {
+  height: $breadcrumb-height;
+  padding-left: 14px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  .link{
+    cursor: pointer;
+  }
+}
+
+.main-container {
+  padding: $padding-main;
+}
+.filter {
+  padding: 0 $padding-main;
+  height: $filer-height;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  .filter-input{
+    width: 180px;
+  }
+  .filter-select{
+    width: 140px;
+  }
+}
+.main-body {
+  padding: $padding-main;
+  background-color: #fff;
+}
+.paging-container{
+  padding-left: $padding-main;
+  padding-right: $padding-main;
+  height: $paging-height;
+  overflow: hidden;
+  background-color: #fff;
+}
+.action-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+}
+
+body{
+  font-size: 14px;
+}
+.mid-bread {
+  .ant-breadcrumb-link a {
+    color: #4c84ff;
+  }
+}
