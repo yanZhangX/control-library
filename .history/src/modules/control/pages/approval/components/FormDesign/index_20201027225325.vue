@@ -73,6 +73,7 @@ export default {
       // 拖拽了 全是默认
       if (this.list.length > 0 && this.choosed === -1) {
         this.$emit('comps', this.list)
+
         return
       }
       // 拖拽并且选择了

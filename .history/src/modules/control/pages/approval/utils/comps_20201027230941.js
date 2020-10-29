@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-14 14:52:38
- * @LastEditors: xiangty
+ * @LastEditors: fy
  * @LastEditTime: 2020-09-11 14:50:59
- * @FilePath: /control-library/src/modules/control/pages/approval/utils/comps.js
+ * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/utils/comps.js
  */
 
 const list = [
@@ -115,7 +115,33 @@ const list = [
     title: '选择省市区',
     tips: '请选择',
     field: undefined
-  }
+  }。
+//   选择同事
+    {
+      tag: 'mates',
+      name: '选择同事',
+      required: 1,
+      title: '选择同事',
+      tips: '请选择',
+      field: undefined
+    },
+    // 资产选择
+    {
+      tag: 'assets',
+      name: '资产选择',
+      required: 1,
+      title: '资产选择',
+      tips: '请选择',
+      initialNum: 5 // 默认可选项数
+    },
+    // 资产归还
+    {
+      tag: 'assetReturn',
+      name: '资产归还',
+      title: '资产归还',
+      required: 1,
+      field: undefined
+    }
 ]
 
 export default list

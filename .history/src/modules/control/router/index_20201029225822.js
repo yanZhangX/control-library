@@ -18,14 +18,14 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: '/login',
       component: Index,
       children: [
         {
           path: '/dashboard',
           name: 'dashboard',
           component: Dashboard,
-          redirect: '/login'
+          redirect: '/createNew'
         }
       ]
     },

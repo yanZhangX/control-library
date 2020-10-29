@@ -6,7 +6,11 @@
 -->
 <template>
   <div class="create">
-    <BreadNav :navLists="[{ label: '控件库', url: $route.fullPath }]"></BreadNav>
+    <BreadNav
+      :navLists="[
+        { label: '控件库', url: $route.fullPath }
+      ]"
+    ></BreadNav>
     <Steps :progress="progress" :current="current"></Steps>
 
     <keep-alive>

@@ -7,7 +7,7 @@
 <template>
   <div class="bread">
     <a-breadcrumb>
-      <a-breadcrumb-item>表单设计</a-breadcrumb-item>
+      <a-breadcrumb-item>行政系统</a-breadcrumb-item>
       <a-breadcrumb-item v-for="(nav, index) in navLists" :key="index">
         <a @click="handleBack(nav)">{{ nav.label }}</a>
       </a-breadcrumb-item>

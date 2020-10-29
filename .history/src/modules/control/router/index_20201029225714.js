@@ -25,12 +25,12 @@ let router = new Router({
           path: '/dashboard',
           name: 'dashboard',
           component: Dashboard,
-          redirect: '/login'
+          redirect: '/createNew'
         }
       ]
     },
     {
-      path: '/login',
+        path: '/login',
       name: 'login',
       component: Login
     },

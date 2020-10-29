@@ -6,7 +6,12 @@
 -->
 <template>
   <div class="create">
-    <BreadNav :navLists="[{ label: '控件库', url: $route.fullPath }]"></BreadNav>
+    <BreadNav
+      :navLists="[
+        { label: '审批类型', url: '/approvalType' },
+        { label: '创建新审批', url: $route.fullPath }
+      ]"
+    ></BreadNav>
     <Steps :progress="progress" :current="current"></Steps>
 
     <keep-alive>
@@ -119,7 +124,7 @@ export default {
         }
       })
       this.comps = data
-      console.log(JSON.stringify(data))
+      console.log(data)
       //   this.current = 2
     },
     createTemp(data) {

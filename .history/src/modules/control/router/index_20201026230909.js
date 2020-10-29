@@ -8,7 +8,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../pages'
 import Dashboard from '../pages/dashboard'
-import Login from '../pages/loginRegister/login/index.vue'
 import Page404 from '@/Page404'
 import approval from './modules/approval'
 
@@ -24,15 +23,9 @@ let router = new Router({
         {
           path: '/dashboard',
           name: 'dashboard',
-          component: Dashboard,
-          redirect: '/login'
+          component: Dashboard
         }
       ]
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
     },
     ...approval,
     {

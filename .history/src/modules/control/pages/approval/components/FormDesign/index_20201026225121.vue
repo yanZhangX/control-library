@@ -73,6 +73,7 @@ export default {
       // 拖拽了 全是默认
       if (this.list.length > 0 && this.choosed === -1) {
         this.$emit('comps', this.list)
+
         return
       }
       // 拖拽并且选择了
@@ -100,7 +101,6 @@ export default {
     // 保存
     saveOptions(val) {
       this.list[this.choosed] = _.cloneDeep(val)
-      console.log(val)
       this.$refs.content.$forceUpdate()
     },
     // 选中的预览中组件改变

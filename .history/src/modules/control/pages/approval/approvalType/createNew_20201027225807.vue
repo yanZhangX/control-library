@@ -6,14 +6,19 @@
 -->
 <template>
   <div class="create">
-    <BreadNav :navLists="[{ label: '控件库', url: $route.fullPath }]"></BreadNav>
+    <BreadNav
+      :navLists="[
+        { label: '审批类型', url: '/approvalType' },
+        { label: '创建新审批', url: $route.fullPath }
+      ]"
+    ></BreadNav>
     <Steps :progress="progress" :current="current"></Steps>
 
     <keep-alive>
       <!-- <BaseOptions @base="saveBase" @next="changeCurrent" v-if="current === 0"></BaseOptions> -->
       <FormDesign @comps="saveComps" @next="changeCurrent" v-if="current === 1"></FormDesign>
     </keep-alive>
-    <!-- <FlowDesign @changeSponsor="changeSponsor" @create="createTemp" @next="changeCurrent" :start="base.sponsor" v-if="current === 2"></FlowDesign> -->
+    <FlowDesign @changeSponsor="changeSponsor" @create="createTemp" @next="changeCurrent" :start="base.sponsor" v-if="current === 2"></FlowDesign>
   </div>
 </template>
 
@@ -118,9 +123,9 @@ export default {
           this.fields.push(`${item.title}-${item.field}`)
         }
       })
+
       this.comps = data
-      console.log(JSON.stringify(data))
-      //   this.current = 2
+      this.current = 2
     },
     createTemp(data) {
       if (Utils.checkEmpty(data)) {
