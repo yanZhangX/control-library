@@ -190,7 +190,7 @@ export default {
     // 分组排序开启
     sortTypes() {
       if (this.sortList) {
-        this.$messageSend.warning('请先完成当前排序操作')
+        this.$message.warning('请先完成当前排序操作')
         return
       }
       this.sortList = cloneDeep(this.list)
@@ -223,7 +223,7 @@ export default {
     // 开启小类排序
     sortLists(index) {
       if (this.sortList) {
-        this.$messageSend.warning('请先完成当前排序操作')
+        this.$message.warning('请先完成当前排序操作')
         return
       }
       this.list[index].sort = true

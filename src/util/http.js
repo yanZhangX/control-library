@@ -8,18 +8,11 @@ import axios from 'axios'
 import { getToken, messageInstance } from './method'
 // import Vue from 'vue'
 
-export let BASE_URL = 'https://oas.lianlianlvyou.com'
+export let BASE_URL = ''
 
 if (process.env.NODE_ENV !== 'production') {
-  // 开发网关
-  // BASE_URL = 'http://192.168.10.124:32001'
-  // BASE_URL = 'http://192.168.101.216:8081'
-  // BASE_URL = 'http://192.168.10.124:32011'
-  // 行政系统
-  // 外网穿透的
-  // BASE_URL = 'http://adminstration.free.vipnps.vip'
   // 本地
-  BASE_URL = 'http://192.168.100.87:8080' // 杨永玲
+  BASE_URL = 'http://3mypr3.natappfree.cc'
 }
 
 let instance = axios.create({

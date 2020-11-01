@@ -89,7 +89,7 @@ export default {
     saveComps(data) {
       // 至少有一个为必填
       if (!Utils.checkRequired(data)) {
-        this.$messageSend.warning('必须至少包含一个必填项')
+        this.$message.warning('必须至少包含一个必填项')
         return
       }
       // 最多只能有一个附件上传
@@ -100,7 +100,7 @@ export default {
         }
       })
       if (num > 1) {
-        this.$messageSend.warning('只能包含一个附件上传')
+        this.$message.warning('只能包含一个附件上传')
         return
       }
       this.fields = []
@@ -120,11 +120,45 @@ export default {
       })
       this.comps = data
       console.log(JSON.stringify(data))
+      let params = {
+        userinfo: {
+          examine_r: '刘少研' // 审核人
+        },
+
+        forminfo: {
+          moidfy: 0, // 是否允许修改，来源默认
+          examine: 0, // 是否已审核
+          template_name: '登录摸板' // 摸板名称
+        },
+
+        data: [
+          {
+            tag: 'input',
+            name: '单行输入框',
+            required: 0,
+            title: '单行输入框',
+            tips: '请输入',
+            characterLimit: 20,
+            field: 'input0',
+            control_id: 1
+          },
+          {
+            tag: 'textarea',
+            name: '多行输入框',
+            required: 1,
+            title: '多行输入框',
+            tips: '请输入',
+            characterLimit: 200,
+            field: 'textarea1',
+            control_id: 2
+          }
+        ]
+      }
       //   this.current = 2
     },
     createTemp(data) {
       if (Utils.checkEmpty(data)) {
-        this.$messageSend.warning('请将节点信息补充完整')
+        this.$message.warning('请将节点信息补充完整')
         return
       }
       this.$delete(this.base, 'sponsorShow')

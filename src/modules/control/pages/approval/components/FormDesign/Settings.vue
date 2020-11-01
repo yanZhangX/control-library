@@ -195,7 +195,7 @@ export default {
     // 删除选项
     delSelect(index) {
       if (this.form.options.length === 2) {
-        this.$messageSend.warning('最少保留两个选项')
+        this.$message.warning('最少保留两个选项')
         return
       }
       this.form.options.splice(index, 1)
@@ -214,7 +214,7 @@ export default {
       result
         .then((res) => {
           this.$emit('saveOptions', _.cloneDeep(res))
-          this.$messageSend.success('保存成功')
+          this.$message.success('保存成功')
         })
         .catch((err) => {
           console.log(err)

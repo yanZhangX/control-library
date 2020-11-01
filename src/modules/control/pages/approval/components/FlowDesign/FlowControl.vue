@@ -23,11 +23,11 @@ export default {
     },
     addList() {
       if (this.config.fieldName === '') {
-        this.$messageSend.warning('请先选择需要添加条件的控件')
+        this.$message.warning('请先选择需要添加条件的控件')
         return
       }
       if (this.config.conditionList.length > 3) {
-        this.$messageSend.warning('最多可添加四个条件')
+        this.$message.warning('最多可添加四个条件')
         return
       }
       let arr = this.config.fieldName.split('-')

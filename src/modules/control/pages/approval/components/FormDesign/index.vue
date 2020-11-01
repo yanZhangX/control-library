@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 10:11:37
- * @LastEditors: fy
- * @LastEditTime: 2020-10-09 10:38:25
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 00:34:36
  * @FilePath: /control-library/src/modules/administration/pages/approval/components/FormDesign/index.vue
 -->
 <template>
@@ -18,8 +18,8 @@
     <section class="content-bar">
       <Container ref="content" @delete="del" @sortList="sortList" @choosed="chooseChange" :list="list" :choosed="choosed"></Container>
       <div class="next">
-        <a-button type="primary" @click="goPrev">上一步</a-button>
-        <a-button type="primary" @click="next">下一步</a-button>
+        <!-- <a-button type="primary" @click="goPrev">上一步</a-button> -->
+        <a-button type="primary" @click="next">保存</a-button>
       </div>
     </section>
     <Settings @saveOptions="saveOptions" ref="setting" :form="form"></Settings>
@@ -34,6 +34,7 @@ import Container from './Container.vue'
 import List from '../../utils/comps.js'
 import _ from 'lodash'
 import { getTempComps } from '@/service/approval/index.js'
+import { formInsert } from '@/service'
 
 export default {
   components: {
@@ -66,7 +67,7 @@ export default {
     next() {
       // 没拖拽组件进去
       if (!this.list.length) {
-        this.$messageSend.warning('表单内容不能为空')
+        this.$message.warning('表单内容不能为空')
         return
       }
 
@@ -81,7 +82,7 @@ export default {
           this.$emit('comps', this.list)
         })
         .catch((err) => {
-          this.$messageSend.warning('请将内容补充完整')
+          this.$message.warning('请将内容补充完整')
           console.log(err)
         })
     },
