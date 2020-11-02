@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:33:07
- * @LastEditors: fy
- * @LastEditTime: 2020-09-03 10:03:13
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 22:25:01
  * @FilePath: /ll-web-administration/src/modules/administration/router/index.js
  */
 import Vue from 'vue'
@@ -13,6 +13,17 @@ import Page404 from '@/Page404'
 import approval from './modules/approval'
 
 Vue.use(Router)
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch((err) => err)
+}
+const originalReplace = Router.prototype.replace
+Router.prototype.replace = function replace(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+  return originalReplace.call(this, location).catch((err) => err)
+}
 
 let router = new Router({
   routes: [

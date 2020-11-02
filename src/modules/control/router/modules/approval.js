@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:37:37
- * @LastEditors: fy
- * @LastEditTime: 2020-10-09 09:45:13
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 23:23:07
  * @FilePath: /ll-web-administration/src/modules/administration/router/modules/approval.js
  */
 const routes = [
@@ -12,6 +12,15 @@ const routes = [
   {
     path: '/createNew',
     component: () => import('../../pages/approval/approvalType/createNew.vue')
+  },
+  {
+    path: '/formList',
+    name: 'formList',
+    component: () => import('../../pages/formList/index.vue')
+  },
+  {
+    path: '/formDetail',
+    component: () => import('../../pages/formList/formDetail.vue')
   }
 ]
 

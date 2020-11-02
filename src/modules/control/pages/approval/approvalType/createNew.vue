@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-03 10:20:38
- * @LastEditors: fy
- * @LastEditTime: 2020-09-24 14:16:19
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 21:39:12
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/approvalType/createNew.vue
 -->
 <template>
@@ -114,6 +114,7 @@ export default {
           item.field = 'assetReturn'
         } else {
           item.field = `${item.tag}${index}`
+          item.control_id = index + 1
         }
         if (item.tag === 'input-number') {
           this.fields.push(`${item.title}-${item.field}`)

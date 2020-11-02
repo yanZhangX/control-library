@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:33:07
- * @LastEditors: fy
- * @LastEditTime: 2020-09-24 11:18:34
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 21:40:45
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
@@ -63,7 +63,7 @@ instance.interceptors.response.use(
       case 401:
         return Promise.reject(new Error('processed'))
       default:
-        return body.data // TODO 直接返回数据，业务不用关心code和message
+        return body // TODO 直接返回数据，业务不用关心code和message
     }
   },
   () => {
