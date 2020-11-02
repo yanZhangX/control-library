@@ -34,7 +34,6 @@ import Container from './Container.vue'
 import List from '../../utils/comps.js'
 import _ from 'lodash'
 import { getTempComps } from '@/service/approval/index.js'
-import { formInsert } from '@/service'
 
 export default {
   components: {

@@ -12,7 +12,7 @@ export let BASE_URL = ''
 
 if (process.env.NODE_ENV !== 'production') {
   // 本地
-  BASE_URL = 'http://3mypr3.natappfree.cc'
+  BASE_URL = 'http://liusy.top:8098'
 }
 
 let instance = axios.create({
@@ -21,12 +21,12 @@ let instance = axios.create({
   headers: { Authorization: getToken() }
 })
 instance.interceptors.request.use((config) => {
-  if (!getToken()) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error('没有token')
-    }
-    return Promise.reject(new Error('用户失效'))
-  }
+  // if (!getToken()) {
+  //   if (process.env.NODE_ENV !== 'production') {
+  //     console.error('没有token')
+  //   }
+  //   return Promise.reject(new Error('用户失效'))
+  // }
   let reqUrl = config.url || ''
   config.url = reqUrl
   return config

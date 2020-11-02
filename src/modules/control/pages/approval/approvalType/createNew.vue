@@ -24,6 +24,7 @@ import BaseOptions from '../components/BaseOptions.vue'
 import FlowDesign from '../components/FlowDesign'
 import FormDesign from '../components/FormDesign'
 import { createApprover, editorApprover } from '@/service/approval/index.js'
+import { formInsert } from '@/service'
 import { Utils } from '../utils/util'
 import BreadNav from '../components/BreadNav.vue'
 
@@ -120,41 +121,24 @@ export default {
       })
       this.comps = data
       console.log(JSON.stringify(data))
+      this.addForm()
+      //   this.current = 2
+    },
+    addForm() {
       let params = {
         userinfo: {
           examine_r: '刘少研' // 审核人
         },
-
         forminfo: {
           moidfy: 0, // 是否允许修改，来源默认
           examine: 0, // 是否已审核
           template_name: '登录摸板' // 摸板名称
         },
-
-        data: [
-          {
-            tag: 'input',
-            name: '单行输入框',
-            required: 0,
-            title: '单行输入框',
-            tips: '请输入',
-            characterLimit: 20,
-            field: 'input0',
-            control_id: 1
-          },
-          {
-            tag: 'textarea',
-            name: '多行输入框',
-            required: 1,
-            title: '多行输入框',
-            tips: '请输入',
-            characterLimit: 200,
-            field: 'textarea1',
-            control_id: 2
-          }
-        ]
+        data: this.comps
       }
-      //   this.current = 2
+      formInsert(params).then((res) => {
+        console.log(res)
+      })
     },
     createTemp(data) {
       if (Utils.checkEmpty(data)) {
