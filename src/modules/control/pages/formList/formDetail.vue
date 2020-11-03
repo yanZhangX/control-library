@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-02 23:12:32
- * @LastEditTime: 2020-11-02 23:32:52
+ * @LastEditTime: 2020-11-03 21:58:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \control-library\src\modules\control\pages\formList\formDetail.vue
@@ -69,9 +69,7 @@ export default {
     queryFormDetail() {
       const { templateId } = this
       formDetailQuery({ templateid: templateId }).then((res) => {
-        const { data, rowCount } = res
-        this.assetsList = data
-        this.total = rowCount
+        this.formDetail = res
       })
     }
   },

@@ -22,15 +22,12 @@ module.exports = {
     //     changeOrigin: true
     //   }
     // ],
-    /* proxyTable:{
-      '/': {
-        target: 'http://www.xxx.cn/api', //你要访问的服务器域名
-        changeOrigin: true, //允许跨域
-        pathRewrite: {
-          '^/': ''
-        }
+    proxyTable:{
+      '/api': {
+        target: 'http://liusy.top:8089', //你要访问的服务器域名
+        changeOrigin: true //允许跨域
       }
-    }, */
+    },
     // Various Dev Server settings
     // host: '192.168.10.234', // can be overwritten by process.env.HOST
     host: 'localhost', // can be overwritten by process.env.HOST

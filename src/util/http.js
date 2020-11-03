@@ -1,22 +1,22 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 21:40:45
+ * @LastEditTime: 2020-11-04 00:25:06
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
 import { getToken, messageInstance } from './method'
 // import Vue from 'vue'
 
-export let BASE_URL = ''
+// export let BASE_URL = ''
 
-if (process.env.NODE_ENV !== 'production') {
-  // 本地
-  BASE_URL = 'http://liusy.top:8098'
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   // 本地
+//   BASE_URL = '/'
+// }
 
 let instance = axios.create({
-  baseURL: BASE_URL,
+  //   baseURL: BASE_URL,
   timeout: 60000,
   headers: { Authorization: getToken() }
 })
