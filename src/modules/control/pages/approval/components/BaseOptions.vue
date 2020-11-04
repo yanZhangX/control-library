@@ -2,57 +2,61 @@
   <div class="baseOptions">
     <a-form-model ref="ruleForm" :model="form" layout="vertical" :rules="rules" class="form">
       <!-- 审批名称 -->
-      <a-form-model-item label="审批名称:" prop="name">
-        <a-input :maxLength="20" v-model="form.name" placeholder="请输入审批名称(最多20字)" />
+      <a-form-model-item label="审批名称:" prop="template_name">
+        <a-input :maxLength="20" v-model="form.template_name" placeholder="请输入审批名称(最多20字)" />
       </a-form-model-item>
-      <!-- 分组 -->
-      <a-form-model-item label="选择分组:" prop="groupId">
-        <a-select v-model="form.groupId" placeholder="请选择分组">
-          <a-select-option v-for="item in group" :key="item.id" :value="item.id">{{ item.name }}</a-select-option>
-        </a-select>
+      <!-- 是否允许修改 -->
+      <a-form-model-item label="是否允许修改:" prop="examine">
+        <a-radio-group v-model="form.examine">
+          <a-radio :value="0">
+            否
+          </a-radio>
+          <a-radio :value="1">
+            是
+          </a-radio>
+        </a-radio-group>
       </a-form-model-item>
       <!-- 发起人类型 -->
-      <a-form-model-item label="谁可以发起这个审批(谁可以看到此审批类型):" prop="sponsorShow">
+      <!-- <a-form-model-item label="谁可以发起这个审批(谁可以看到此审批类型):" prop="sponsorShow">
         <a-tree-select :label-in-value="true" v-model="form.sponsorShow" style="width: 100%" :tree-data="treeData" tree-checkable :show-checked-strategy="SHOW_PARENT" placeholder="选择发起人" />
-      </a-form-model-item>
+      </a-form-model-item> -->
       <!-- 管理 -->
-      <a-form-model-item label="谁可以管理这个模版的数据:" prop="custodian">
+      <!-- <a-form-model-item label="谁可以管理这个模版的数据:" prop="custodian">
         <a-select mode="multiple" v-model="form.custodian" placeholder="选择管理员" :filter-option="false" :not-found-content="fetching ? undefined : null" @search="handleSearch">
           <a-spin v-if="fetching" slot="notFoundContent" size="small" />
           <a-select-option v-for="d in data" :key="d.userId + ':' + d.userName">
             {{ d.userName }}
           </a-select-option>
         </a-select>
-      </a-form-model-item>
+      </a-form-model-item> -->
       <!-- 图标 -->
-      <a-form-model-item label="图标:" prop="icon">
+      <!-- <a-form-model-item label="图标:" prop="icon">
         <div>
           <img :src="form.icon" alt />
           <a-button type="primary" @click="showIcons = true">选择图标</a-button>
         </div>
-      </a-form-model-item>
+      </a-form-model-item> -->
       <!-- 备注 -->
-      <a-form-model-item label="备注(最多20字):">
+      <!-- <a-form-model-item label="备注(最多20字):">
         <a-input :maxLength="20" v-model="form.remark" type="textarea" />
-      </a-form-model-item>
+      </a-form-model-item> -->
       <!-- 下一步 -->
       <a-form-model-item>
         <a-button type="primary" @click="goFormDesign">下一步</a-button>
       </a-form-model-item>
     </a-form-model>
 
-    <a-modal class="icon-list" v-model="showIcons" title="选择图标" @ok="chooseImg">
+    <!-- <a-modal class="icon-list" v-model="showIcons" title="选择图标" @ok="chooseImg">
       <div class="box">
         <div @click="chooseIcon(index)" :class="iconIndex === index || form.icon === item ? 'icon-items active' : 'icon-items'" v-for="(item, index) in icons" :key="index">
           <img :src="item" alt="" />
         </div>
       </div>
-    </a-modal>
+    </a-modal> -->
   </div>
 </template>
 
 <script>
-import cloneDeep from 'lodash/cloneDeep'
 import debounce from 'lodash/debounce'
 import { queryUser, queryApprovalGroup, queryPosition, getTempBase } from '@/service/approval/index.js'
 import { TreeSelect } from 'ant-design-vue'
@@ -65,14 +69,8 @@ export default {
     return {
       // 表单信息
       form: {
-        name: null,
-        groupId: undefined,
-        sponsor: [],
-        sponsorShow: [],
-        custodian: [],
-        remark: '',
-        icon: '',
-        available: 1
+        template_name: undefined,
+        examine: undefined
       },
       iconIndex: -1,
       group: [], // 审批类型分组
@@ -85,11 +83,8 @@ export default {
       SHOW_PARENT,
       // 校验规则
       rules: {
-        name: [{ required: true, message: '请输入审批名称', trigger: 'blur' }],
-        groupId: [{ required: true, message: '请选择分组', trigger: 'blur' }],
-        sponsorShow: [{ required: true, type: 'array', message: '请选择发起人员', trigger: 'change', min: 1 }],
-        custodian: [{ required: true, type: 'array', message: '请选择管理人员', trigger: 'change', min: 1 }],
-        icon: [{ required: true, message: '请选择图标' }]
+        template_name: [{ required: true, message: '请输入审批名称', trigger: 'blur' }],
+        examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
       },
       editorId: null,
       sequence: null
@@ -131,32 +126,6 @@ export default {
     goFormDesign() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          // 处理form.sponsorShow
-          let arr = cloneDeep(this.form.sponsorShow)
-          this.form.sponsor = []
-          arr.forEach((item) => {
-            let obj = {}
-            if (item.value.indexOf('-') > -1) {
-              obj = {
-                name: item.value.split('-')[0],
-                orders: item.value.split('-')[1]
-              }
-            } else {
-              obj = {
-                name: '',
-                orders: item.value
-              }
-            }
-
-            this.form.sponsor.push(obj)
-          })
-
-          if (this.editorId) {
-            this.form.sequence = this.sequence
-            this.form.id = this.editorId
-          }
-
-          // 提交后，格式化form.custodian
           this.$emit('base', this.form)
           this.$emit('next', 1)
         } else {

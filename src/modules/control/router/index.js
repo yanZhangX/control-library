@@ -1,13 +1,14 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 22:25:01
+ * @LastEditTime: 2020-11-04 21:38:41
  * @FilePath: /ll-web-administration/src/modules/administration/router/index.js
  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../pages'
 import Dashboard from '../pages/dashboard'
+import AuthorizeError from '../pages/authorizeError'
 import Login from '../pages/loginRegister/login/index.vue'
 import Page404 from '@/Page404'
 import approval from './modules/approval'
@@ -36,7 +37,7 @@ let router = new Router({
           path: '/dashboard',
           name: 'dashboard',
           component: Dashboard,
-          redirect: '/createNew'
+          redirect: '/formList'
         }
       ]
     },
@@ -46,6 +47,11 @@ let router = new Router({
       component: Login
     },
     ...approval,
+    {
+      path: '/authorizeError',
+      name: 'authorizeError',
+      component: AuthorizeError
+    },
     {
       path: '/error',
       name: 'page404',

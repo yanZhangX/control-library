@@ -1,22 +1,23 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 00:25:06
+ * @LastEditTime: 2020-11-04 22:13:10
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
 import { getToken, messageInstance } from './method'
+import router from '../modules/control/router'
 // import Vue from 'vue'
 
-// export let BASE_URL = ''
+export let BASE_URL = 'http://tb.jmgdyf.com:8089'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   // 本地
-//   BASE_URL = '/'
+//   BASE_URL = ''
 // }
 
 let instance = axios.create({
-  //   baseURL: BASE_URL,
+  baseURL: BASE_URL,
   timeout: 60000,
   headers: { Authorization: getToken() }
 })
@@ -52,16 +53,9 @@ instance.interceptors.response.use(
     const body = response.data || {}
     const { code, message } = body
     switch (code) {
-      case 1002:
-      case 1001:
-        messageInstance.error(message)
-        return code
-      case 10001:
-        return Promise.reject(new Error('用户失效'))
-      case 500:
-        return Promise.reject(new Error('processed'))
-      case 401:
-        return Promise.reject(new Error('processed'))
+      case 21006:
+        router.push({ path: '/authorizeError', query: { message } })
+        break
       default:
         return body // TODO 直接返回数据，业务不用关心code和message
     }

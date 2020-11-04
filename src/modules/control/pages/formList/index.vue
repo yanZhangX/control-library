@@ -1,7 +1,7 @@
 <!--
  * @Author: xiangty
  * @Date: 2020-11-02 21:44:26
- * @LastEditTime: 2020-11-02 23:25:17
+ * @LastEditTime: 2020-11-04 21:48:02
  * @LastEditors: Please set LastEditors
  * @Description: 表单列表
  * @FilePath: \control-library\src\modules\control\pages\formList\index.vue
@@ -19,6 +19,7 @@
       <template slot="filterOptions">
         <a-button type="primary" @click="statusChange">搜索</a-button>
         <a-button @click="statusRest">重置</a-button>
+        <a-button type="primary" @click="creatNewForm">创建表单模板</a-button>
       </template>
     </TableFilter>
     <div class="main-container">
@@ -85,6 +86,9 @@ export default {
     this.statusChange()
   },
   methods: {
+    creatNewForm() {
+      this.$router.push({ path: '/createNew' })
+    },
     handlePageChange(page) {
       console.log(page)
     },

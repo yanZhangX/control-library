@@ -1,8 +1,8 @@
 <!--
- * @Author: your name
+ * @Author: xiangty
  * @Date: 2020-11-02 23:12:32
- * @LastEditTime: 2020-11-03 21:58:35
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 21:35:37
+ * @LastEditors: xiangty
  * @Description: In User Settings Edit
  * @FilePath: \control-library\src\modules\control\pages\formList\formDetail.vue
 -->

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-03 10:20:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 21:39:12
+ * @LastEditTime: 2020-11-04 22:03:42
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/approvalType/createNew.vue
 -->
 <template>
@@ -10,7 +10,7 @@
     <Steps :progress="progress" :current="current"></Steps>
 
     <keep-alive>
-      <!-- <BaseOptions @base="saveBase" @next="changeCurrent" v-if="current === 0"></BaseOptions> -->
+      <BaseOptions @base="saveBase" @next="changeCurrent" v-if="current === 0"></BaseOptions>
       <FormDesign @comps="saveComps" @next="changeCurrent" v-if="current === 1"></FormDesign>
     </keep-alive>
     <!-- <FlowDesign @changeSponsor="changeSponsor" @create="createTemp" @next="changeCurrent" :start="base.sponsor" v-if="current === 2"></FlowDesign> -->
@@ -45,17 +45,14 @@ export default {
   data() {
     return {
       progress: [
-        // {
-        //   title: '基础设置'
-        // },
+        {
+          title: '基础设置'
+        },
         {
           title: '表单设计'
         }
-        // {
-        //   title: '审批流程设计'
-        // }
       ],
-      current: 1,
+      current: 0,
       base: null,
 
       fields: [],
@@ -77,14 +74,13 @@ export default {
     },
     saveBase(data) {
       let obj = cloneDeep(data)
-
-      let arr = obj.custodian.map((item) => {
-        return {
-          id: item.split(':')[0],
-          name: item.split(':')[1]
-        }
-      })
-      obj.custodian = arr
+      //   let arr = obj.custodian.map((item) => {
+      //     return {
+      //       id: item.split(':')[0],
+      //       name: item.split(':')[1]
+      //     }
+      //   })
+      //   obj.custodian = arr
       this.base = obj
     },
     saveComps(data) {
@@ -126,19 +122,17 @@ export default {
       //   this.current = 2
     },
     addForm() {
+      const { base, comps } = this
       let params = {
         userinfo: {
           examine_r: '刘少研' // 审核人
         },
-        forminfo: {
-          moidfy: 0, // 是否允许修改，来源默认
-          examine: 0, // 是否已审核
-          template_name: '登录摸板' // 摸板名称
-        },
-        data: this.comps
+        forminfo: base,
+        data: comps
       }
       formInsert(params).then((res) => {
-        console.log(res)
+        this.$message.success('创建成功')
+        this.$router.go(-1)
       })
     },
     createTemp(data) {
