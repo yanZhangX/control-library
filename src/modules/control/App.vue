@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-26 22:12:38
+ * @LastEditTime: 2020-11-05 23:11:26
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \control-library\src\modules\control\App.vue
+-->
 <template>
   <a-config-provider :locale="zhCN" style="height: 100%;" :transformCellText="transformCell">
     <router-view />
@@ -19,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 html {
   width: 100vw;
   height: 100%;
@@ -28,7 +36,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #eef1f6 !important;
+  background-color: #eef1f6;
   word-break: break-all;
 }
 </style>
