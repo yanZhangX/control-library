@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 22:13:10
+ * @LastEditTime: 2020-11-08 23:18:35
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
@@ -9,7 +9,7 @@ import { getToken, messageInstance } from './method'
 import router from '../modules/control/router'
 // import Vue from 'vue'
 
-export let BASE_URL = 'http://tb.jmgdyf.com:8089'
+// export let BASE_URL = 'http://tb.jmgdyf.com:8089'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   // 本地
@@ -17,7 +17,7 @@ export let BASE_URL = 'http://tb.jmgdyf.com:8089'
 // }
 
 let instance = axios.create({
-  baseURL: BASE_URL,
+  //   baseURL: BASE_URL,
   timeout: 60000,
   headers: { Authorization: getToken() }
 })

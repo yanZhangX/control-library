@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 10:11:37
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 00:34:36
+ * @LastEditTime: 2020-11-08 23:07:06
  * @FilePath: /control-library/src/modules/administration/pages/approval/components/FormDesign/index.vue
 -->
 <template>
@@ -175,7 +175,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$head: 125px;
+$head: 147px;
 .formDesign {
   height: calc(100% - #{$head});
   overflow-y: auto;

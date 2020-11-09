@@ -6,7 +6,7 @@
         <a-input :maxLength="20" v-model="form.template_name" placeholder="请输入审批名称(最多20字)" />
       </a-form-model-item>
       <!-- 是否允许修改 -->
-      <a-form-model-item label="是否允许修改:" prop="examine">
+      <!-- <a-form-model-item label="是否允许修改:" prop="examine">
         <a-radio-group v-model="form.examine">
           <a-radio :value="0">
             否
@@ -15,30 +15,6 @@
             是
           </a-radio>
         </a-radio-group>
-      </a-form-model-item>
-      <!-- 发起人类型 -->
-      <!-- <a-form-model-item label="谁可以发起这个审批(谁可以看到此审批类型):" prop="sponsorShow">
-        <a-tree-select :label-in-value="true" v-model="form.sponsorShow" style="width: 100%" :tree-data="treeData" tree-checkable :show-checked-strategy="SHOW_PARENT" placeholder="选择发起人" />
-      </a-form-model-item> -->
-      <!-- 管理 -->
-      <!-- <a-form-model-item label="谁可以管理这个模版的数据:" prop="custodian">
-        <a-select mode="multiple" v-model="form.custodian" placeholder="选择管理员" :filter-option="false" :not-found-content="fetching ? undefined : null" @search="handleSearch">
-          <a-spin v-if="fetching" slot="notFoundContent" size="small" />
-          <a-select-option v-for="d in data" :key="d.userId + ':' + d.userName">
-            {{ d.userName }}
-          </a-select-option>
-        </a-select>
-      </a-form-model-item> -->
-      <!-- 图标 -->
-      <!-- <a-form-model-item label="图标:" prop="icon">
-        <div>
-          <img :src="form.icon" alt />
-          <a-button type="primary" @click="showIcons = true">选择图标</a-button>
-        </div>
-      </a-form-model-item> -->
-      <!-- 备注 -->
-      <!-- <a-form-model-item label="备注(最多20字):">
-        <a-input :maxLength="20" v-model="form.remark" type="textarea" />
       </a-form-model-item> -->
       <!-- 下一步 -->
       <a-form-model-item>
@@ -58,7 +34,7 @@
 
 <script>
 import debounce from 'lodash/debounce'
-import { queryUser, queryApprovalGroup, queryPosition, getTempBase } from '@/service/approval/index.js'
+import { queryUser, getTempBase } from '@/service/approval/index.js'
 import { TreeSelect } from 'ant-design-vue'
 import icons from '../utils/icons.js'
 const SHOW_PARENT = TreeSelect.SHOW_PARENT
@@ -83,8 +59,8 @@ export default {
       SHOW_PARENT,
       // 校验规则
       rules: {
-        template_name: [{ required: true, message: '请输入审批名称', trigger: 'blur' }],
-        examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
+        template_name: [{ required: true, message: '请输入审批名称', trigger: 'blur' }]
+        // examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
       },
       editorId: null,
       sequence: null
@@ -92,8 +68,6 @@ export default {
   },
   inject: ['editor'],
   created() {
-    this.getTypes()
-    this.getPosition()
     this.editorId = this.editor()
     if (this.editorId) {
       this.getTemp()
@@ -110,19 +84,6 @@ export default {
       }
       this.showIcons = false
     },
-    // 获取职位
-    getPosition() {
-      queryPosition().then((res) => {
-        this.treeData = [{ ...res }]
-      })
-    },
-    // 获取模版类型
-    getTypes() {
-      queryApprovalGroup().then((res) => {
-        this.group = res.ApprovalGroupList.filter((item) => item.name !== '停用')
-      })
-    },
-
     goFormDesign() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {

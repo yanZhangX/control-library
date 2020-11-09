@@ -1,16 +1,21 @@
 <!--
  * @Date: 2020-07-03 10:20:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 22:03:42
+ * @LastEditTime: 2020-11-08 23:09:31
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/approvalType/createNew.vue
 -->
 <template>
   <div class="create">
     <BreadNav :navLists="[{ label: '控件库', url: $route.fullPath }]"></BreadNav>
-    <Steps :progress="progress" :current="current"></Steps>
-
+    <!-- <Steps :progress="progress" :current="current"></Steps> -->
+    <a-form-model ref="ruleForm" :model="base" layout="vertical" :rules="rules" class="form">
+      <!-- 审批名称 -->
+      <a-form-model-item label="审批名称:" prop="templateName" :wrapper-col="{ span: 12 }">
+        <a-input :maxLength="20" v-model="base.templateName" placeholder="请输入审批名称(最多20字)" />
+      </a-form-model-item>
+    </a-form-model>
     <keep-alive>
-      <BaseOptions @base="saveBase" @next="changeCurrent" v-if="current === 0"></BaseOptions>
+      <!-- <BaseOptions @base="saveBase" @next="changeCurrent" v-if="current === 0"></BaseOptions> -->
       <FormDesign @comps="saveComps" @next="changeCurrent" v-if="current === 1"></FormDesign>
     </keep-alive>
     <!-- <FlowDesign @changeSponsor="changeSponsor" @create="createTemp" @next="changeCurrent" :start="base.sponsor" v-if="current === 2"></FlowDesign> -->
@@ -52,12 +57,16 @@ export default {
           title: '表单设计'
         }
       ],
-      current: 0,
-      base: null,
+      current: 1,
+      base: {},
 
       fields: [],
       comps: null,
-      editorId: null
+      editorId: null,
+      rules: {
+        templateName: [{ required: true, message: '请输入审批名称', trigger: 'blur' }]
+        // examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
+      }
     }
   },
   created() {
@@ -124,10 +133,7 @@ export default {
     addForm() {
       const { base, comps } = this
       let params = {
-        userinfo: {
-          examine_r: '刘少研' // 审核人
-        },
-        forminfo: base,
+        ...base,
         data: comps
       }
       formInsert(params).then((res) => {
@@ -174,4 +180,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.form {
+  padding-left: 20px;
+}
+</style>
