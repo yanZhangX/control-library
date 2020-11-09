@@ -79,7 +79,7 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout'
-import { registerUser } from '@/service'
+import { registerUser, loginUser } from '@/service'
 import { mapMutations } from 'vuex'
 
 export default {
@@ -106,21 +106,23 @@ export default {
       this.form.validateFields((err) => {
         if (!err) {
           this.logging = true
+          const { userName, userPhone, password } = { userName: form.getFieldValue('userName'), userPhone: form.getFieldValue('userPhone'), password: form.getFieldValue('password') }
           if (tabsKey === 2) {
-            const { userName, userPhone, password } = { userName: form.getFieldValue('userName'), userPhone: form.getFieldValue('userPhone'), password: form.getFieldValue('password') }
             console.log({ userName, userPhone, password })
             registerUser({ userName, userPhone, password }).then((res) => {
               this.tabsKey = 1
               this.logging = false
             })
+            return false
           }
-
-          //   login(name, password).then(this.afterLogin)
+          loginUser({ userPhone, password }).then(this.afterLogin)
         }
       })
     },
     afterLogin(res) {
       this.logging = false
+      this.$router.push({ path: '/' })
+      /*
       const loginRes = res.data
       if (loginRes.code >= 0) {
         const { user, permissions, roles } = loginRes.data
@@ -130,6 +132,7 @@ export default {
       } else {
         this.error = loginRes.message
       }
+      */
     }
   }
 }

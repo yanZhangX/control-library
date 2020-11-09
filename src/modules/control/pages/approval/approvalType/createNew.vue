@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-03 10:20:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-08 23:09:31
+ * @LastEditTime: 2020-11-09 22:25:54
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/approvalType/createNew.vue
 -->
 <template>
@@ -83,13 +83,6 @@ export default {
     },
     saveBase(data) {
       let obj = cloneDeep(data)
-      //   let arr = obj.custodian.map((item) => {
-      //     return {
-      //       id: item.split(':')[0],
-      //       name: item.split(':')[1]
-      //     }
-      //   })
-      //   obj.custodian = arr
       this.base = obj
     },
     saveComps(data) {
@@ -126,8 +119,13 @@ export default {
         }
       })
       this.comps = data
-      console.log(JSON.stringify(data))
-      this.addForm()
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.addForm()
+        } else {
+          return false
+        }
+      })
       //   this.current = 2
     },
     addForm() {
