@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:28
- * @LastEditors: fy
- * @LastEditTime: 2020-10-09 10:38:47
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-10 23:14:20
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Settings.vue
 -->
 <template>
@@ -55,9 +55,9 @@
         <a-textarea v-model="form.tips" placeholder="请输入说明文字" :maxLength="20"></a-textarea>
       </a-form-model-item>
       <!-- 默认选项个数，资产选择专属 -->
-      <a-form-model-item :label="createLabel('选项个数', '默认5个')" prop="initialNum" v-if="form.tag === 'assets'">
+      <!-- <a-form-model-item :label="createLabel('选项个数', '默认5个')" prop="initialNum" v-if="form.tag === 'select'">
         <a-input-number :min="1" style="width: 100%;" v-model="form.initialNum"></a-input-number>
-      </a-form-model-item>
+      </a-form-model-item> -->
 
       <!-- 保存 -->
       <a-form-item>

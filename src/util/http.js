@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-08 23:18:35
+ * @LastEditTime: 2020-11-10 23:20:27
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
@@ -56,6 +56,9 @@ instance.interceptors.response.use(
       case 21006:
         router.push({ path: '/authorizeError', query: { message } })
         break
+      case 10027:
+        router.push({ path: '/login' })
+        return Promise.reject(new Error(message))
       default:
         return body // TODO 直接返回数据，业务不用关心code和message
     }

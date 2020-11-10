@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 10:11:37
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-08 23:07:06
+ * @LastEditTime: 2020-11-11 00:20:23
  * @FilePath: /control-library/src/modules/administration/pages/approval/components/FormDesign/index.vue
 -->
 <template>
@@ -33,7 +33,7 @@ import Comps from './Comps.vue'
 import Container from './Container.vue'
 import List from '../../utils/comps.js'
 import _ from 'lodash'
-import { getTempComps } from '@/service/approval/index.js'
+import { formDetailQuery } from '@/service'
 
 export default {
   components: {
@@ -54,6 +54,7 @@ export default {
   inject: ['editor'],
   created() {
     this.editorId = this.editor()
+    console.log(this.editorId)
     if (this.editorId) {
       this.getTemp()
     }
@@ -161,13 +162,10 @@ export default {
       }
     },
     getTemp() {
-      getTempComps({ templateId: this.editorId }).then((res) => {
-        this.list = res
-        this.list.forEach((item) => {
-          if (item.options && item.options.length > 0) {
-            item.options = JSON.parse(item.options)
-          }
-        })
+      formDetailQuery({ templateId: this.editorId }).then((res) => {
+        const { templateDetailList, templateName } = res.data
+        this.list = templateDetailList
+        this.$emit('getTemplateName', templateName)
       })
     }
   }

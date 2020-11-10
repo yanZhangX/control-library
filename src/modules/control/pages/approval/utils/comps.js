@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-14 14:52:38
- * @LastEditors: xiangty
- * @LastEditTime: 2020-09-11 14:50:59
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-10 23:12:53
  * @FilePath: /control-library/src/modules/control/pages/approval/utils/comps.js
  */
 
@@ -59,6 +59,15 @@ const list = [
     name: '多选框',
     required: 1,
     title: '多选框',
+    filed: undefined,
+    // 选项列表
+    options: ['选项1', '选项2', '选项3']
+  },
+  {
+    tag: 'select',
+    name: '下拉框',
+    required: 1,
+    title: '下拉框',
     filed: undefined,
     // 选项列表
     options: ['选项1', '选项2', '选项3']

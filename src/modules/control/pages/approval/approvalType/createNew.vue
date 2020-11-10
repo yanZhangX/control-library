@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-03 10:20:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-09 22:25:54
+ * @LastEditTime: 2020-11-11 00:39:22
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/approvalType/createNew.vue
 -->
 <template>
@@ -16,7 +16,7 @@
     </a-form-model>
     <keep-alive>
       <!-- <BaseOptions @base="saveBase" @next="changeCurrent" v-if="current === 0"></BaseOptions> -->
-      <FormDesign @comps="saveComps" @next="changeCurrent" v-if="current === 1"></FormDesign>
+      <FormDesign @comps="saveComps" @next="changeCurrent" @getTemplateName="getTemplateName" v-if="current === 1"></FormDesign>
     </keep-alive>
     <!-- <FlowDesign @changeSponsor="changeSponsor" @create="createTemp" @next="changeCurrent" :start="base.sponsor" v-if="current === 2"></FlowDesign> -->
   </div>
@@ -28,8 +28,7 @@ import Steps from '../components/Steps.vue'
 import BaseOptions from '../components/BaseOptions.vue'
 import FlowDesign from '../components/FlowDesign'
 import FormDesign from '../components/FormDesign'
-import { createApprover, editorApprover } from '@/service/approval/index.js'
-import { formInsert } from '@/service'
+import { formInsert, formUpdate } from '@/service'
 import { Utils } from '../utils/util'
 import BreadNav from '../components/BreadNav.vue'
 
@@ -44,7 +43,7 @@ export default {
   provide: function() {
     return {
       fields: () => this.fields,
-      editor: () => this.editorId
+      editor: () => this.templateId
     }
   },
   data() {
@@ -62,7 +61,7 @@ export default {
 
       fields: [],
       comps: null,
-      editorId: null,
+      templateId: null,
       rules: {
         templateName: [{ required: true, message: '请输入审批名称', trigger: 'blur' }]
         // examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
@@ -70,8 +69,8 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.id) {
-      this.editorId = this.$route.query.id
+    if (this.$route.query.templateId) {
+      this.templateId = this.$route.query.templateId
     }
   },
   methods: {
@@ -80,6 +79,12 @@ export default {
     },
     changeCurrent(params) {
       this.current = params
+    },
+    getTemplateName(name) {
+      console.log(name)
+      this.$set(this.base, 'templateName', name)
+      //   this.base.templateName = name
+      //   console.log(this.base)
     },
     saveBase(data) {
       let obj = cloneDeep(data)
@@ -129,51 +134,59 @@ export default {
       //   this.current = 2
     },
     addForm() {
-      const { base, comps } = this
+      const { base, comps, templateId } = this
       let params = {
         ...base,
         data: comps
       }
-      formInsert(params).then((res) => {
-        this.$message.success('创建成功')
-        this.$router.go(-1)
-      })
-    },
-    createTemp(data) {
-      if (Utils.checkEmpty(data)) {
-        this.$message.warning('请将节点信息补充完整')
-        return
-      }
-      this.$delete(this.base, 'sponsorShow')
-      this.comps.forEach((item) => {
-        if (item.options && item.options.length > 0) {
-          item.options = typeof item.options === 'string' ? item.options : JSON.stringify(item.options)
-        }
-      })
-
-      let templateAddReq = {
-        addControlList: this.comps,
-        templateReq: this.base,
-        workFlowReq: cloneDeep(data)
-      }
-      delete templateAddReq.workFlowReq.sponsor
-
-      if (this.editorId) {
-        editorApprover(templateAddReq).then((res) => {
-          if (res === 1001) {
-            return
-          }
-          this.$router.push({ path: '/approvalType' })
+      if (comps[0].id) {
+        params.templateId = templateId
+        formUpdate(params).then((res) => {
+          this.$message.success('修改成功')
+          this.$router.go(-1)
         })
       } else {
-        createApprover(templateAddReq).then((res) => {
-          if (res === 1001) {
-            return
-          }
-          this.$router.push({ path: '/approvalType' })
+        formInsert(params).then((res) => {
+          this.$message.success('创建成功')
+          this.$router.go(-1)
         })
       }
     }
+    // createTemp(data) {
+    //   if (Utils.checkEmpty(data)) {
+    //     this.$message.warning('请将节点信息补充完整')
+    //     return
+    //   }
+    //   this.$delete(this.base, 'sponsorShow')
+    //   this.comps.forEach((item) => {
+    //     if (item.options && item.options.length > 0) {
+    //       item.options = typeof item.options === 'string' ? item.options : JSON.stringify(item.options)
+    //     }
+    //   })
+
+    //   let templateAddReq = {
+    //     addControlList: this.comps,
+    //     templateReq: this.base,
+    //     workFlowReq: cloneDeep(data)
+    //   }
+    //   delete templateAddReq.workFlowReq.sponsor
+
+    //   if (this.templateId) {
+    //     editorApprover(templateAddReq).then((res) => {
+    //       if (res === 1001) {
+    //         return
+    //       }
+    //       this.$router.push({ path: '/approvalType' })
+    //     })
+    //   } else {
+    //     createApprover(templateAddReq).then((res) => {
+    //       if (res === 1001) {
+    //         return
+    //       }
+    //       this.$router.push({ path: '/approvalType' })
+    //     })
+    //   }
+    // }
   }
 }
 </script>

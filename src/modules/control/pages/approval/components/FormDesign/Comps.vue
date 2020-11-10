@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:31:56
- * @LastEditors: fy
- * @LastEditTime: 2020-09-05 11:05:05
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-10 23:03:47
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Comps.vue
 -->
 <template>
@@ -18,8 +18,7 @@
     <img v-if="data.tag === 'tooltips'" src="@/assets/img/approval/ps-word.png" alt="" srcset="" />
     <img v-if="data.tag === 'file'" src="@/assets/img/approval/upload-file.png" alt="" srcset="" />
     <img v-if="data.tag === 'address'" src="@/assets/img/approval/select-address.png" alt="" srcset="" />
-    <img v-if="data.tag === 'mates'" src="@/assets/img/approval/select-mates.png" alt="" srcset="" />
-    <img v-if="data.tag === 'assets'" src="@/assets/img/approval/apply.png" alt="" srcset="" />
+    <img v-if="data.tag === 'select'" src="@/assets/img/approval/second-select.png" alt="" srcset="" />
   </div>
 </template>
 

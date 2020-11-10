@@ -1,7 +1,7 @@
 <!--
  * @Author: xiangty
  * @Date: 2020-11-02 21:44:26
- * @LastEditTime: 2020-11-04 21:48:02
+ * @LastEditTime: 2020-11-10 23:59:14
  * @LastEditors: Please set LastEditors
  * @Description: 表单列表
  * @FilePath: \control-library\src\modules\control\pages\formList\index.vue
@@ -28,7 +28,7 @@
         <a-table :columns="columns" :pagination="false" :dataSource="formList" rowKey="templateId" tableLayout="fixed" :scroll="{ x: 1200 }" :loading="loading">
           <template slot="action" slot-scope="row">
             <a @click="toDetail(row)">详情</a>
-            <a>编辑</a>
+            <a @click="toEdit(row)">编辑</a>
           </template>
         </a-table>
       </div>
@@ -56,7 +56,7 @@ const columns = Object.freeze([
   { title: '模板名称', width: 180, dataIndex: 'templateName', ellipsis: true },
   { title: '创建人', width: 120, dataIndex: 'createR', ellipsis: true },
   { title: '创建时间', width: 120, dataIndex: 'createTime', ellipsis: true },
-  { title: '是否允许修改', width: 80, dataIndex: 'moidfy', ellipsis: true },
+  { title: '是否允许修改', width: 80, dataIndex: 'moidfy', ellipsis: true, customRender: (text) => (text === 0 ? '禁止' : '允许') },
   {
     title: '操作',
     key: 'action',
@@ -89,17 +89,19 @@ export default {
     creatNewForm() {
       this.$router.push({ path: '/createNew' })
     },
-    handlePageChange(page) {
+    handlePageChange(page, pageSize) {
       console.log(page)
+      this.query.currentPage = page
+      this.statusChange()
     },
     statusChange() {
       const { query, $route } = this
       if (Object.getOwnPropertyNames($route.query).length > 0) {
         Object.assign(query, {
           ...$route.query,
-          ...query,
           currentPage: Number($route.query.currentPage),
-          pageSize: Number($route.query.pageSize)
+          pageSize: Number($route.query.pageSize),
+          ...query
         })
       }
       this.$router.replace({
@@ -129,8 +131,10 @@ export default {
         })
     },
     toDetail({ templateId }) {
-      console.log(templateId)
       this.$router.push({ path: '/formDetail', query: { templateId } })
+    },
+    toEdit({ templateId }) {
+      this.$router.push({ path: '/createNew', query: { templateId } })
     }
   }
 }
