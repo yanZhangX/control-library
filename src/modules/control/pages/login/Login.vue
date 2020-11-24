@@ -5,7 +5,8 @@
         <img alt="logo" class="logo" src="@/assets/img/logo.png" />
         <span class="title">{{ systemName }}</span>
       </div>
-      <div class="desc">自定义电子表单控件</div>
+      <!-- 自定义电子表单控件 -->
+      <div class="desc"></div>
     </div>
     <div class="login">
       <a-form @submit="onSubmit" :form="form">
@@ -34,7 +35,7 @@
               </a-input>
             </a-form-item>
           </a-tab-pane>
-          <a-tab-pane tab="注册" :key="2">
+          <!-- <a-tab-pane tab="注册" :key="2">
             <a-form-item>
               <a-input autocomplete="autocomplete" size="large" placeholder="请输入手机号" v-decorator="['userPhone', { rules: [{ required: true, message: '请输入手机号', whitespace: true }] }]">
                 <a-icon slot="prefix" type="mobile" />
@@ -56,7 +57,7 @@
                 <a-icon slot="prefix" type="lock" />
               </a-input>
             </a-form-item>
-          </a-tab-pane>
+          </a-tab-pane> -->
         </a-tabs>
         <div>
           <a-checkbox :checked="true">自动登录</a-checkbox>

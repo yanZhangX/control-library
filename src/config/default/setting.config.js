@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-05 23:36:02
- * @LastEditTime: 2020-11-06 00:04:44
+ * @LastEditTime: 2020-11-23 23:01:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \control-library\src\config\default\setting.config.js
@@ -25,7 +25,7 @@ module.exports = {
   weekMode: false, // 色弱模式，true:开启，false:不开启
   multiPage: false, // 多页签模式，true:开启，false:不开启
   hideSetting: false, // 隐藏设置抽屉，true:隐藏，false:不隐藏
-  systemName: '控件库', // 系统名称
+  systemName: '移动端表单设计器', // 系统名称
   copyright: '2020 copyright', // copyright
   asyncRoutes: false, // 异步加载路由，true:开启，false:不开启
   showPageTitle: true, // 是否显示页面标题（PageLayout 布局中的页面标题），true:显示，false:不显示

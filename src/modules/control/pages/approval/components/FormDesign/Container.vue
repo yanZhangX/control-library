@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:19
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 23:02:55
+ * @LastEditTime: 2020-11-23 23:03:45
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Container.vue
 -->
 <template>
@@ -240,8 +240,8 @@ export default {
 
   data() {
     return {
-      // type: 'mobile',
-      type: 'pc'
+      // type: 'pc',
+      type: 'mobile'
     }
   },
   components: {
