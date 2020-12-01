@@ -1,10 +1,11 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 23:20:27
+ * @LastEditTime: 2020-11-29 00:29:16
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
+import { message } from 'ant-design-vue'
 import { getToken, messageInstance } from './method'
 import router from '../modules/control/router'
 // import Vue from 'vue'
@@ -51,14 +52,17 @@ instance.interceptors.response.use(
 
     // todo 修改拦截器
     const body = response.data || {}
-    const { code, message } = body
+    const { code, msg } = body
     switch (code) {
       case 21006:
-        router.push({ path: '/authorizeError', query: { message } })
+        router.push({ path: '/authorizeError', query: { msg } })
         break
       case 10027:
         router.push({ path: '/login' })
-        return Promise.reject(new Error(message))
+        return Promise.reject(new Error(msg))
+      case 9999:
+        message.error(msg)
+        return Promise.reject(new Error(msg))
       default:
         return body // TODO 直接返回数据，业务不用关心code和message
     }

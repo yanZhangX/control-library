@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:31:56
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 23:03:47
+ * @LastEditTime: 2020-11-29 16:17:46
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Comps.vue
 -->
 <template>
@@ -19,6 +19,8 @@
     <img v-if="data.tag === 'file'" src="@/assets/img/approval/upload-file.png" alt="" srcset="" />
     <img v-if="data.tag === 'address'" src="@/assets/img/approval/select-address.png" alt="" srcset="" />
     <img v-if="data.tag === 'select'" src="@/assets/img/approval/second-select.png" alt="" srcset="" />
+    <img v-if="data.tag === 'location'" src="@/assets/img/approval/location.png" alt="" srcset="" />
+    <img v-if="data.tag === 'data-select'" src="@/assets/img/approval/data-select.png" alt="" srcset="" />
   </div>
 </template>
 

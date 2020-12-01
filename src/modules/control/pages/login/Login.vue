@@ -116,7 +116,9 @@ export default {
             })
             return false
           }
-          loginUser({ userPhone, password }).then(this.afterLogin)
+          loginUser({ userPhone, password })
+            .then(this.afterLogin)
+            .finally((this.logging = false))
         }
       })
     },

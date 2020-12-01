@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-03 10:20:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 00:39:22
+ * @LastEditTime: 2020-11-29 16:39:30
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/approvalType/createNew.vue
 -->
 <template>
@@ -10,8 +10,18 @@
     <!-- <Steps :progress="progress" :current="current"></Steps> -->
     <a-form-model ref="ruleForm" :model="base" layout="vertical" :rules="rules" class="form">
       <!-- 审批名称 -->
-      <a-form-model-item label="审批名称:" prop="templateName" :wrapper-col="{ span: 12 }">
-        <a-input :maxLength="20" v-model="base.templateName" placeholder="请输入审批名称(最多20字)" />
+      <a-form-model-item label="表单名称:" prop="templateName" :wrapper-col="{ span: 12 }">
+        <a-input :maxLength="20" v-model="base.templateName" placeholder="请输入表单名称(最多20字)" />
+      </a-form-model-item>
+      <!-- icon上传 -->
+      <a-form-model-item label="上传图标:" prop="icon" :wrapper-col="{ span: 12 }">
+        <a-upload name="file" list-type="picture-card" :show-upload-list="false" :action="uploadImgUrl" :before-upload="beforeUpload" @change="handleChange">
+          <img v-if="base.iconUrl" :src="base.iconUrl" alt="file" />
+          <div v-else>
+            <a-icon :type="loading ? 'loading' : 'plus'" />
+            <div class="ant-upload-text">上传</div>
+          </div>
+        </a-upload>
       </a-form-model-item>
     </a-form-model>
     <keep-alive>
@@ -29,8 +39,10 @@ import BaseOptions from '../components/BaseOptions.vue'
 import FlowDesign from '../components/FlowDesign'
 import FormDesign from '../components/FormDesign'
 import { formInsert, formUpdate } from '@/service'
+import { uploadImgUrl, getBase64 } from '@/util'
 import { Utils } from '../utils/util'
 import BreadNav from '../components/BreadNav.vue'
+import lrz from 'lrz'
 
 export default {
   components: {
@@ -48,6 +60,7 @@ export default {
   },
   data() {
     return {
+      uploadImgUrl,
       progress: [
         {
           title: '基础设置'
@@ -63,9 +76,10 @@ export default {
       comps: null,
       templateId: null,
       rules: {
-        templateName: [{ required: true, message: '请输入审批名称', trigger: 'blur' }]
+        templateName: [{ required: true, message: '请输入表单名称', trigger: 'blur' }]
         // examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
-      }
+      },
+      loading: false
     }
   },
   created() {
@@ -151,7 +165,7 @@ export default {
           this.$router.go(-1)
         })
       }
-    }
+    },
     // createTemp(data) {
     //   if (Utils.checkEmpty(data)) {
     //     this.$message.warning('请将节点信息补充完整')
@@ -187,6 +201,53 @@ export default {
     //     })
     //   }
     // }
+    // 压缩图片
+    beforeUpload(file) {
+      const limit = 1.8 * 1024 * 1024 // 图片限制1.8M 1.8 * 1024 * 1024
+      if (file && file.size > limit) {
+        lrz(file)
+          .then((res) => {
+            let file = new File([res.file], res.origin.name, { type: res.file.type })
+            file.uid = res.origin.uid
+            return file
+          })
+          .catch((e) => {
+            console.log('压缩失败')
+          })
+      } else {
+        return file
+      }
+      return file
+    },
+    handleCancel() {
+      this.previewVisible = false
+    },
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = (error) => reject(error)
+      })
+    },
+    handleChange({ file }) {
+      const { response } = file
+      if (file.status === 'uploading') {
+        this.loading = true
+        return
+      }
+      if (file.status === 'done') {
+        // Get this url from response in real world.
+        if (response) {
+          this.base.iconUrl = response.body.data
+        } else {
+          getBase64(file.originFileObj, (imageUrl) => {
+            this.base.iconUrl = imageUrl
+            this.loading = false
+          })
+        }
+      }
+    }
   }
 }
 </script>

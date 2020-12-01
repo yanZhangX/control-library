@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 23:14:20
+ * @LastEditTime: 2020-11-29 17:07:34
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Settings.vue
 -->
 <template>
@@ -26,6 +26,10 @@
             否
           </a-radio>
         </a-radio-group>
+      </a-form-model-item>
+      <!-- 是否必填 -->
+      <a-form-model-item label="" v-if="form.required !== undefined && form.required !== null && form.tag === 'pic'">
+        <a-checkbox :checked="form.camera">仅手机拍照</a-checkbox>
       </a-form-model-item>
       <!-- 填写字符限制 -->
       <a-form-model-item label="填写字符限制" prop="characterLimit" v-if="form.characterLimit !== undefined && needCharacterLimit.includes(form.tag)">
@@ -69,6 +73,7 @@
 
 <script>
 import _ from 'lodash'
+import { getTableData } from '@/service'
 export default {
   props: {
     form: {
@@ -171,10 +176,17 @@ export default {
             trigger: 'blur'
           }
         ]
+      },
+      tableFilter: {
+        tableName: '',
+        currentPage: 1,
+        pageSize: 2
       }
     }
   },
-
+  created() {
+    this.queryTableData()
+  },
   methods: {
     checkCharacterLimit(rule, value, callback) {
       let max = this.form.tag === 'input-number' ? 31 : this.form.tag === 'textarea' ? 201 : 21
@@ -238,6 +250,12 @@ export default {
           console.log('error submit!!')
           reject(valid)
         }
+      })
+    },
+    queryTableData() {
+      const { tableFilter } = this
+      getTableData(tableFilter).then((res) => {
+        console.log(res)
       })
     }
   }

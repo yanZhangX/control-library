@@ -1,7 +1,7 @@
 <!--
  * @Author: xiangty
  * @Date: 2020-11-02 21:44:26
- * @LastEditTime: 2020-11-10 23:59:14
+ * @LastEditTime: 2020-11-29 16:48:52
  * @LastEditors: Please set LastEditors
  * @Description: 表单列表
  * @FilePath: \control-library\src\modules\control\pages\formList\index.vue
@@ -27,8 +27,9 @@
       <div class="main-body">
         <a-table :columns="columns" :pagination="false" :dataSource="formList" rowKey="templateId" tableLayout="fixed" :scroll="{ x: 1200 }" :loading="loading">
           <template slot="action" slot-scope="row">
-            <a @click="toDetail(row)">详情</a>
+            <!-- <a @click="toDetail(row)">详情</a> -->
             <a @click="toEdit(row)">编辑</a>
+            <a @click="toDelete(row)">删除</a>
           </template>
         </a-table>
       </div>
@@ -49,7 +50,7 @@
 </template>
 
 <script>
-import { formListQuery } from '@/service'
+import { formListQuery, removeTemplate } from '@/service'
 import { TableFilter } from '@/components'
 
 const columns = Object.freeze([
@@ -79,7 +80,7 @@ export default {
         pageSize: 10,
         templateName: undefined
       },
-      formFilters: [{ label: '公司名称', dataIndex: 'templateName' }]
+      formFilters: [{ label: '模板名称', dataIndex: 'templateName' }]
     }
   },
   created() {
@@ -135,6 +136,19 @@ export default {
     },
     toEdit({ templateId }) {
       this.$router.push({ path: '/createNew', query: { templateId } })
+    },
+    toDelete({ templateId }) {
+      this.$confirm({
+        title: '确认删除此模板吗？',
+        onOk: () => {
+          removeTemplate({ templateId }).then((res) => {
+            const { code } = res
+            if (code === 200) {
+              this.$message.success('删除成功')
+            }
+          })
+        }
+      })
     }
   }
 }

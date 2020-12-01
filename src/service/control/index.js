@@ -1,7 +1,7 @@
 /*
  * @Author: xiangty
  * @Date: 2020-11-01 23:50:56
- * @LastEditTime: 2020-11-11 00:15:07
+ * @LastEditTime: 2020-11-29 16:41:50
  * @LastEditors: Please set LastEditors
  * @Description: 控件库接口
  * @FilePath: \control-library\src\service\control\index.js
@@ -26,7 +26,7 @@ export function formUpdate(data) {
 }
 export function formListQuery(params) {
   return http({
-    url: '/api/v1/form/list',
+    url: '/api/v1/form/getTemplateList',
     method: 'get',
     params
   })
@@ -52,5 +52,21 @@ export function loginUser(data) {
     url: '/api/v1/user/login',
     method: 'post',
     data
+  })
+}
+// 下拉框动态查询的接口
+export function getTableData(params) {
+  return http({
+    url: '/api/v1/form/getTableData',
+    method: 'get',
+    params
+  })
+}
+// 删除表单数据（模版）
+export function removeTemplate(params) {
+  return http({
+    url: '/api/v1/form/removeTemplate',
+    method: 'get',
+    params
   })
 }

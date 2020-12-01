@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-14 14:52:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 23:12:53
+ * @LastEditTime: 2020-11-29 16:31:19
  * @FilePath: /control-library/src/modules/control/pages/approval/utils/comps.js
  */
 
@@ -97,6 +97,7 @@ const list = [
     required: 1,
     title: '图片上传',
     tips: '请上传图片，最大不超过2M',
+    camera: false,
     filed: undefined
   },
   // 说明文字
@@ -124,6 +125,25 @@ const list = [
     title: '选择省市区',
     tips: '请选择',
     field: undefined
+  },
+  // 位置
+  {
+    tag: 'location',
+    name: '位置',
+    required: 1,
+    title: '地址',
+    tips: '请输入地址',
+    field: undefined
+  },
+  // 数据源下拉
+  {
+    tag: 'data-select',
+    name: '数据源下拉',
+    required: 1,
+    title: '数据源下拉',
+    tips: '请选择',
+    field: undefined,
+    options: ['选项1', '选项2', '选项3']
   }
 ]
 

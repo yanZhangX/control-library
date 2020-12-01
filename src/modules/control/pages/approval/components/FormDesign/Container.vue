@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:19
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-23 23:03:45
+ * @LastEditTime: 2020-11-29 16:23:06
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Container.vue
 -->
 <template>
@@ -69,6 +69,15 @@
             </div>
             <!-- 下拉框 -->
             <div class="multRadio" v-if="item.tag === 'select'">
+              <div class="title">{{ item.title }}</div>
+              <div class="tips">
+                <span>{{ item.tips }}</span
+                ><a-icon type="right" />
+              </div>
+            </div>
+
+            <!-- 数据源下拉 -->
+            <div class="multRadio" v-if="item.tag === 'data-select'">
               <div class="title">{{ item.title }}</div>
               <div class="tips">
                 <span>{{ item.tips }}</span
@@ -147,7 +156,7 @@
                 </div>
               </div>
             </div>
-            <!-- 同事 || 省市区 -->
+            <!-- 省市区 -->
             <div class="select" v-if="item.tag === 'address' || item.tag === 'mates'">
               <div class="title">{{ item.title }}:</div>
               <div class="area">
@@ -156,7 +165,7 @@
               </div>
             </div>
 
-            <!-- 资产选择 -->
+            <!-- 下拉框 -->
             <div class="select" v-if="item.tag === 'select'">
               <div class="title">{{ item.title }}:</div>
               <div class="area">
@@ -165,43 +174,14 @@
               </div>
             </div>
 
-            <!-- 资产归还 -->
-            <div class="assetReturn" v-if="item.tag === 'assetReturn'">
-              <h1>资产归还</h1>
-              <div class="assetReturnItem">
-                <span class="left">品牌:</span>
-                <span class="right">华为</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">类型:</span>
-                <span class="right">电脑</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">型号:</span>
-                <span class="right">MateBook Pro</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">分配日期:</span>
-                <span class="right">2020/1/2</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">归还类型:</span>
-                <span class="right">直接交还</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">物流类型:</span>
-                <span class="right">快递</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">姓名:</span>
-                <span class="right">张三</span>
-              </div>
-              <div class="assetReturnItem">
-                <span class="left">电话:</span>
-                <span class="right">123113131313</span>
+            <!-- 数据源下拉 -->
+            <div class="select" v-if="item.tag === 'data-select'">
+              <div class="title">{{ item.title }}:</div>
+              <div class="area">
+                <span>{{ item.tips }}</span>
+                <a-icon class="icon" type="down"></a-icon>
               </div>
             </div>
-
             <div class="del" v-if="index === choosed" @click="del(index)">
               x
             </div>

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-10-26 22:10:46
+ * @LastEditTime: 2020-11-29 15:34:15
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \control-library\src\util\method.js
+ */
 import { message } from 'ant-design-vue'
 
 export function getToken() {
@@ -59,4 +67,9 @@ export function exportExcel(data, excelName = '导出数据') {
   downloadElement.click() // 点击下载
   document.body.removeChild(downloadElement) // 下载完成移除元素
   window.URL.revokeObjectURL(href) // 释放掉blob对象
+}
+export function getBase64(img, callback) {
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(img)
 }
