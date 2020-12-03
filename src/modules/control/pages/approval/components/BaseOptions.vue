@@ -1,21 +1,20 @@
 <template>
   <div class="baseOptions">
     <a-form-model ref="ruleForm" :model="form" layout="vertical" :rules="rules" class="form">
-      <!-- 审批名称 -->
-      <a-form-model-item label="审批名称:" prop="template_name">
-        <a-input :maxLength="20" v-model="form.template_name" placeholder="请输入审批名称(最多20字)" />
+      <!-- 表单名称 -->
+      <a-form-model-item label="表单名称:" prop="templateName" :wrapper-col="{ span: 12 }">
+        <a-input :maxLength="20" v-model="form.templateName" placeholder="请输入表单名称(最多20字)" />
       </a-form-model-item>
-      <!-- 是否允许修改 -->
-      <!-- <a-form-model-item label="是否允许修改:" prop="examine">
-        <a-radio-group v-model="form.examine">
-          <a-radio :value="0">
-            否
-          </a-radio>
-          <a-radio :value="1">
-            是
-          </a-radio>
-        </a-radio-group>
-      </a-form-model-item> -->
+      <!-- icon上传 -->
+      <a-form-model-item label="上传图标:" prop="icon" :wrapper-col="{ span: 12 }">
+        <a-upload name="file" list-type="picture-card" :show-upload-list="false" :action="uploadImgUrl" :before-upload="beforeUpload" @change="handleChange">
+          <img class="icon-url" v-if="form.iconUrl" :src="form.iconUrl" alt="file" />
+          <div v-else>
+            <a-icon :type="loading ? 'loading' : 'plus'" />
+            <div class="ant-upload-text">上传</div>
+          </div>
+        </a-upload>
+      </a-form-model-item>
       <!-- 下一步 -->
       <a-form-model-item>
         <a-button type="primary" @click="goFormDesign">下一步</a-button>
@@ -33,21 +32,24 @@
 </template>
 
 <script>
-import debounce from 'lodash/debounce'
-import { queryUser, getTempBase } from '@/service/approval/index.js'
+import { formDetailQuery } from '@/service'
 import { TreeSelect } from 'ant-design-vue'
+import { uploadImgUrl, getBase64 } from '@/util'
 import icons from '../utils/icons.js'
+import lrz from 'lrz'
+
 const SHOW_PARENT = TreeSelect.SHOW_PARENT
 export default {
   data() {
     this.lastFetchId = 0
-    this.handleSearch = debounce(this.handleSearch, 800)
     return {
       // 表单信息
       form: {
-        template_name: undefined,
-        examine: undefined
+        templateName: undefined,
+        iconUrl: undefined
       },
+      uploadImgUrl,
+      loading: false,
       iconIndex: -1,
       group: [], // 审批类型分组
       data: [], // 查询到的管理员list
@@ -59,7 +61,7 @@ export default {
       SHOW_PARENT,
       // 校验规则
       rules: {
-        template_name: [{ required: true, message: '请输入审批名称', trigger: 'blur' }]
+        templateName: [{ required: true, message: '请输入表单名称', trigger: 'blur' }]
         // examine: [{ required: true, message: '请选择是否允许修改', trigger: 'blur' }]
       },
       editorId: null,
@@ -70,7 +72,7 @@ export default {
   created() {
     this.editorId = this.editor()
     if (this.editorId) {
-      this.getTemp()
+      this.getTemplate()
     }
   },
 
@@ -95,43 +97,62 @@ export default {
         }
       })
     },
-
-    handleSearch(e) {
-      this.lastFetchId += 1
-      const fetchId = this.lastFetchId
-      this.data = []
-      this.fetching = true
-      queryUser({ keywords: e }).then((res) => {
-        if (fetchId !== this.lastFetchId) {
-          return
-        }
-        this.data = res.records
-        this.fetching = false
+    // 压缩图片
+    beforeUpload(file) {
+      const limit = 1.8 * 1024 * 1024 // 图片限制1.8M 1.8 * 1024 * 1024
+      if (file && file.size > limit) {
+        lrz(file)
+          .then((res) => {
+            let file = new File([res.file], res.origin.name, { type: res.file.type })
+            file.uid = res.origin.uid
+            return file
+          })
+          .catch((e) => {
+            console.log('压缩失败')
+          })
+      } else {
+        return file
+      }
+      return file
+    },
+    handleCancel() {
+      this.previewVisible = false
+    },
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = (error) => reject(error)
       })
     },
+    handleChange({ file }) {
+      const { response } = file
+      if (file.status === 'uploading') {
+        this.loading = true
+        return
+      }
+      if (file.status === 'done') {
+        // Get this url from response in real world.
+        console.log(response)
+        if (response) {
+          this.form.iconUrl = response.data
+        } else {
+          getBase64(file.originFileObj, (imageUrl) => {
+            this.form.iconUrl = imageUrl
+          })
+        }
+        this.loading = false
+      }
+    },
     // 编辑状态下，获取base
-    getTemp() {
-      getTempBase({ templateId: this.editorId }).then((res) => {
-        Object.keys(this.form).map((key) => {
-          this.form[key] = res[key]
-        })
-        this.form.sponsorShow = this.form.sponsor.map((item) => {
-          if (item.name) {
-            return {
-              value: `${item.name}-${item.orders}`
-            }
-          } else {
-            return { value: `${item.orders}` }
-          }
-        })
-
-        this.form.sponsor = []
-
-        this.form.custodian = this.form.custodian.map((item) => {
-          return `${item.relatedId}:${item.relatedName}`
-        })
-
-        this.sequence = res.sequence
+    getTemplate() {
+      formDetailQuery({ templateId: this.editorId }).then((res) => {
+        const { templateName, iconUrl } = res.data
+        this.form = {
+          templateName,
+          iconUrl
+        }
       })
     }
   }
@@ -149,6 +170,9 @@ $head: 125px;
     width: 600px;
     margin: 0 auto;
     padding: 50px 0;
+  }
+  .icon-url {
+    max-width: 200px;
   }
 }
 

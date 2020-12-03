@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 10:11:37
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 00:20:23
+ * @LastEditTime: 2020-12-03 22:28:03
  * @FilePath: /control-library/src/modules/administration/pages/approval/components/FormDesign/index.vue
 -->
 <template>
@@ -163,9 +163,8 @@ export default {
     },
     getTemp() {
       formDetailQuery({ templateId: this.editorId }).then((res) => {
-        const { templateDetailList, templateName } = res.data
+        const { templateDetailList } = res.data
         this.list = templateDetailList
-        this.$emit('getTemplateName', templateName)
       })
     }
   }
@@ -176,9 +175,7 @@ export default {
 $head: 147px;
 .formDesign {
   height: calc(100% - #{$head});
-  overflow-y: auto;
   display: flex;
-
   .left-bar {
     width: 20%;
     min-width: 335px;

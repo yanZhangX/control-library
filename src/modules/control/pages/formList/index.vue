@@ -1,7 +1,7 @@
 <!--
  * @Author: xiangty
  * @Date: 2020-11-02 21:44:26
- * @LastEditTime: 2020-11-29 16:48:52
+ * @LastEditTime: 2020-12-03 23:34:13
  * @LastEditors: Please set LastEditors
  * @Description: 表单列表
  * @FilePath: \control-library\src\modules\control\pages\formList\index.vue
@@ -84,6 +84,7 @@ export default {
     }
   },
   created() {
+    this.queryParams()
     this.statusChange()
   },
   methods: {
@@ -95,18 +96,23 @@ export default {
       this.query.currentPage = page
       this.statusChange()
     },
-    statusChange() {
-      const { query, $route } = this
-      if (Object.getOwnPropertyNames($route.query).length > 0) {
-        Object.assign(query, {
-          ...$route.query,
-          currentPage: Number($route.query.currentPage),
-          pageSize: Number($route.query.pageSize),
-          ...query
+    // 获取query的参数
+    queryParams() {
+      const queryLen = Object.keys(this.$route.query).length
+      if (queryLen) {
+        const { query } = this.$route
+        Object.assign(this.query, {
+          ...query,
+          currentPage: query.currentPage && typeof query.currentPage === 'string' ? Number(query.currentPage) : query.currentPage,
+          pageSize: query.pageSize && typeof query.pageSize === 'string' ? Number(query.pageSize) : query.pageSize
         })
       }
+    },
+    statusChange() {
+      const { query } = this
+      const { path } = this.$route
       this.$router.replace({
-        path: $route.path,
+        path,
         query
       })
       this.loading = true
@@ -115,7 +121,8 @@ export default {
     statusRest() {
       Object.assign(this.query, {
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
+        templateName: undefined
       })
       this.statusChange()
     },

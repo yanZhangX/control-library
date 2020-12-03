@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-10-26 22:12:38
- * @LastEditTime: 2020-11-05 23:11:26
+ * @LastEditTime: 2020-12-03 23:22:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \control-library\src\modules\control\App.vue
@@ -36,7 +36,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #eef1f6;
+  background-color: #eef1f6 !important;
   word-break: break-all;
 }
 </style>
