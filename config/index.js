@@ -24,7 +24,7 @@ module.exports = {
     // ],
     proxyTable:{
       '/api': {
-        target: 'http://tb.jmgdyf.com:8089', //你要访问的服务器域名
+        target: 'http://0028aeb7dd47.ngrok.io', //你要访问的服务器域名
         changeOrigin: true //允许跨域
       }
     },

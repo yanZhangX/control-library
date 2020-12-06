@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-29 00:29:16
+ * @LastEditTime: 2020-12-06 00:28:13
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
@@ -10,7 +10,7 @@ import { getToken, messageInstance } from './method'
 import router from '../modules/control/router'
 // import Vue from 'vue'
 
-// export let BASE_URL = 'http://tb.jmgdyf.com:8089'
+export let BASE_URL = 'http://d2788904dfb3.ngrok.io'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   // 本地
