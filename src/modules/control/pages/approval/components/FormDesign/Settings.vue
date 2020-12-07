@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-29 17:07:34
+ * @LastEditTime: 2020-12-06 14:04:14
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Settings.vue
 -->
 <template>
@@ -29,7 +29,7 @@
       </a-form-model-item>
       <!-- 是否必填 -->
       <a-form-model-item label="" v-if="form.required !== undefined && form.required !== null && form.tag === 'pic'">
-        <a-checkbox :checked="form.camera">仅手机拍照</a-checkbox>
+        <a-checkbox :checked="form.camera" @change="onChangeCamera">仅手机拍照</a-checkbox>
       </a-form-model-item>
       <!-- 填写字符限制 -->
       <a-form-model-item label="填写字符限制" prop="characterLimit" v-if="form.characterLimit !== undefined && needCharacterLimit.includes(form.tag)">
@@ -58,11 +58,6 @@
       <a-form-model-item :label="createLabel('说明文字', '最多20字')" prop="tips" v-if="form.tag === 'tooltips'">
         <a-textarea v-model="form.tips" placeholder="请输入说明文字" :maxLength="20"></a-textarea>
       </a-form-model-item>
-      <!-- 默认选项个数，资产选择专属 -->
-      <!-- <a-form-model-item :label="createLabel('选项个数', '默认5个')" prop="initialNum" v-if="form.tag === 'select'">
-        <a-input-number :min="1" style="width: 100%;" v-model="form.initialNum"></a-input-number>
-      </a-form-model-item> -->
-
       <!-- 保存 -->
       <a-form-item>
         <a-button type="primary" @click="save">保存</a-button>
@@ -188,6 +183,9 @@ export default {
     this.queryTableData()
   },
   methods: {
+    onChangeCamera(e) {
+      this.form.camera = e.target.checked
+    },
     checkCharacterLimit(rule, value, callback) {
       let max = this.form.tag === 'input-number' ? 31 : this.form.tag === 'textarea' ? 201 : 21
       let min = 0

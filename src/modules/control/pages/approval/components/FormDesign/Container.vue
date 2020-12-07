@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:19
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-29 16:23:06
+ * @LastEditTime: 2020-12-06 14:13:32
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Container.vue
 -->
 <template>
@@ -21,7 +21,7 @@
               <div class="tips">{{ item.tips }}</div>
             </div>
             <!-- 单选框 -->
-            <div class="radio" v-if="item.tag === 'radio'">
+            <!-- <div class="radio" v-if="item.tag === 'radio'">
               <div class="title">{{ item.title }}</div>
               <div class="options">
                 <div class="option" v-for="(item, index) in item.options" :key="index">
@@ -29,9 +29,9 @@
                   <span>{{ item }}</span>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- 多选框 || 日期 || 省市区 || 同事 -->
-            <div class="multRadio" v-if="item.tag === 'radio-group' || item.tag === 'date' || item.tag === 'address' || item.tag === 'mates'">
+            <div class="multRadio" v-if="item.tag === 'radio-group' || item.tag === 'date' || item.tag === 'address' || item.tag === 'mates' || item.tag === 'radio'">
               <div class="title">{{ item.title }}</div>
               <div class="tips">
                 <span>{{ item.tips }}</span

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-14 14:52:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-29 16:31:19
+ * @LastEditTime: 2020-12-06 14:06:51
  * @FilePath: /control-library/src/modules/control/pages/approval/utils/comps.js
  */
 
@@ -49,6 +49,7 @@ const list = [
     name: '单选框',
     required: 1,
     title: '单选框',
+    tips: '请选择',
     field: undefined,
     // 选项列表
     options: ['选项1', '选项2']
@@ -59,6 +60,7 @@ const list = [
     name: '多选框',
     required: 1,
     title: '多选框',
+    tips: '请选择',
     filed: undefined,
     // 选项列表
     options: ['选项1', '选项2', '选项3']
@@ -68,6 +70,7 @@ const list = [
     name: '下拉框',
     required: 1,
     title: '下拉框',
+    tips: '请选择',
     filed: undefined,
     // 选项列表
     options: ['选项1', '选项2', '选项3']
@@ -78,6 +81,7 @@ const list = [
     name: '日期',
     required: 1,
     title: '日期',
+    tips: '请选择日期',
     field: undefined,
     dateType: 'YYYY-MM-DD' // 默认，可选yyyy-mm-dd hh-mm
   },
@@ -87,6 +91,7 @@ const list = [
     name: '日期区间',
     required: 1,
     title: '日期区间',
+    tips: '请选择日期区间',
     field: undefined,
     dateType: 'YYYY-MM-DD' // 默认，可选yyyy-mm-dd hh-mm
   },
