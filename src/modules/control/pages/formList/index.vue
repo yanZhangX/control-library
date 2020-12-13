@@ -1,7 +1,7 @@
 <!--
  * @Author: xiangty
  * @Date: 2020-11-02 21:44:26
- * @LastEditTime: 2020-12-03 23:34:13
+ * @LastEditTime: 2020-12-13 23:29:20
  * @LastEditors: Please set LastEditors
  * @Description: 表单列表
  * @FilePath: \control-library\src\modules\control\pages\formList\index.vue
@@ -151,6 +151,7 @@ export default {
           removeTemplate({ templateId }).then((res) => {
             const { code } = res
             if (code === 200) {
+              this.statusChange()
               this.$message.success('删除成功')
             }
           })

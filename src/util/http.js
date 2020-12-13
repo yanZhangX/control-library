@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-03 09:33:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-06 13:49:31
+ * @LastEditTime: 2020-12-11 21:36:05
  * @FilePath: /ll-web-administration/src/util/http.js
  */
 import axios from 'axios'
@@ -43,8 +43,8 @@ instance.interceptors.response.use(
         // 如果JSON.parse(enc.decode(new Uint8Array(res.data)))报错，说明返回的是文件流，进入catch，下载文件
         let enc = new TextDecoder('utf-8')
         let res = JSON.parse(enc.decode(new Uint8Array(response.data))) // 转化成json对象
-        messageInstance.error(res.message)
-        return Promise.reject(new Error(res.message))
+        messageInstance.error(res.data.msg)
+        return Promise.reject(new Error(res.data.msg))
       } catch (err) {
         return Promise.resolve(response.data)
       }
@@ -61,6 +61,9 @@ instance.interceptors.response.use(
         router.push({ path: '/login' })
         return Promise.reject(new Error(msg))
       case 9999:
+        message.error(msg)
+        return Promise.reject(new Error(msg))
+      case 500:
         message.error(msg)
         return Promise.reject(new Error(msg))
       default:

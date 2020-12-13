@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-13 14:32:19
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-06 14:13:32
+ * @LastEditTime: 2020-12-08 11:19:20
  * @FilePath: /ll-web-administration/src/modules/administration/pages/approval/components/FormDesign/Container.vue
 -->
 <template>
@@ -31,7 +31,7 @@
               </div>
             </div> -->
             <!-- 多选框 || 日期 || 省市区 || 同事 -->
-            <div class="multRadio" v-if="item.tag === 'radio-group' || item.tag === 'date' || item.tag === 'address' || item.tag === 'mates' || item.tag === 'radio'">
+            <div class="multRadio" v-if="item.tag === 'radio-group' || item.tag === 'date' || item.tag === 'address' || item.tag === 'mates' || item.tag === 'radio' || item.tag === 'location'">
               <div class="title">{{ item.title }}</div>
               <div class="tips">
                 <span>{{ item.tips }}</span
@@ -173,7 +173,11 @@
                 <a-icon class="icon" type="down"></a-icon>
               </div>
             </div>
-
+            <!-- 位置 -->
+            <div class="input" v-if="item.tag === 'location'">
+              <div class="title">{{ item.title }}:</div>
+              <div class="area">{{ item.tips }}</div>
+            </div>
             <!-- 数据源下拉 -->
             <div class="select" v-if="item.tag === 'data-select'">
               <div class="title">{{ item.title }}:</div>

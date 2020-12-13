@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-02 22:35:01
- * @LastEditTime: 2020-11-02 22:39:19
- * @LastEditors: your name
+ * @LastEditTime: 2020-12-10 22:48:20
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \control-library\src\components\TableFilter.vue
 -->
@@ -71,7 +71,7 @@ export default {
   padding-bottom: 16px;
   margin: 20px $padding-main;
   .filter_left {
-    flex: 0 0 85%;
+    flex: 0 0 50%;
     display: flex;
     flex-wrap: wrap;
     .filter-item_container {
