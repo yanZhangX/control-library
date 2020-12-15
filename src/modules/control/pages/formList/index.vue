@@ -30,6 +30,7 @@
             <!-- <a @click="toDetail(row)">详情</a> -->
             <a @click="toEdit(row)">编辑</a>
             <a @click="toDelete(row)">删除</a>
+            <a v-clipboard:copy="`http://tb.jmgdyf.com:8089/page/v1/mobile/formInput`" v-clipboard:success="onCopy" v-clipboard:error="onError">复制链接</a>
           </template>
         </a-table>
       </div>

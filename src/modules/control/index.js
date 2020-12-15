@@ -10,6 +10,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Antd from 'ant-design-vue'
+import VueClipboard from 'vue-clipboard2'
 import '../../assets/style/global.scss'
 import '../../assets/style/theme.scss'
 import '../../assets/style/antd.less'
@@ -24,6 +25,7 @@ Vue.mixin(mainMixin)
 Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(plugin)
+Vue.use(VueClipboard)
 // Vue.use(axios)
 Vue.component('breadNav', BreadNav)
 /* eslint-disable no-new */
