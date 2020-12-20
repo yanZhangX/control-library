@@ -30,7 +30,12 @@
             <!-- <a @click="toDetail(row)">详情</a> -->
             <a @click="toEdit(row)">编辑</a>
             <a @click="toDelete(row)">删除</a>
-            <a v-clipboard:copy="`http://tb.jmgdyf.com:8089/page/v1/mobile/formInput`" v-clipboard:success="onCopy" v-clipboard:error="onError">复制链接</a>
+            <a
+              v-clipboard:copy="`http://tb.jmgdyf.com:8089/page/v1/mobile#/formInput?templateId=${row.templateId}&path=%2FformShow%2FformList`"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              >复制链接</a
+            >
           </template>
         </a-table>
       </div>
@@ -63,7 +68,7 @@ const columns = Object.freeze([
     title: '操作',
     key: 'action',
     fixed: 'right',
-    width: 145,
+    width: 200,
     scopedSlots: { customRender: 'action' }
   }
 ])
@@ -158,6 +163,13 @@ export default {
           })
         }
       })
+    },
+    // 复制
+    onCopy() {
+      this.$message.success('复制成功')
+    },
+    onError() {
+      this.$message.success('复制失败')
     }
   }
 }

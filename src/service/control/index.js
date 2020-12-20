@@ -26,7 +26,7 @@ export function formUpdate(data) {
 }
 export function formListQuery(params) {
   return http({
-    url: '/api/v1/form/getTemplateList',
+    url: '/api/v1/form/getTemplateListByPc',
     method: 'get',
     params
   })
