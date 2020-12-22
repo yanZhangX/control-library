@@ -59,13 +59,13 @@
                   ><a-icon type="right" />
                 </div>
               </div>
-              <div class="bottom">
+              <!-- <div class="bottom">
                 <div class="title">{{ item.title }}</div>
                 <div class="tips">
                   <span>{{ item.tips }}</span
                   ><a-icon type="right" />
                 </div>
-              </div>
+              </div> -->
             </div>
             <!-- 下拉框 -->
             <div class="multRadio" v-if="item.tag === 'select'">
